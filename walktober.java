@@ -1,62 +1,46 @@
-
-/* package codechef; // don't place package name! */
 import java.util.*;
 import java.lang.*;
 import java.io.*;
 
-/* Name of the class has to be "Main" only if the class is public. */
-class Codechef {
+class walktober {
     public static void main(String[] args) throws java.lang.Exception {
         try {
             FastReader sc = new FastReader();
             PrintWriter pw = new PrintWriter(System.out);
             int t = sc.nextInt();
+            int tc = t;
             while (t-- != 0) {
-                long n = sc.nextInt();
-                long k = sc.nextInt();
-                ArrayList<Long> list = new ArrayList<>();
+                int n = sc.nextInt();
+                int days = sc.nextInt();
+                int id = sc.nextInt();
+                int scoor[] = new int [days];
+                int jhon[] = new int [days];
                 for(int i=0;i<n;i++){
-                    list.add(sc.nextLong());
+                    for(int j=0;j<days;j++){
+                        int a = sc.nextInt();
+                        if(a>scoor[j]){
+                            scoor[j] = a;
+                        }
+                        if((i+1)==id){
+                            jhon[j] = a;
+                        }
+                    }
                 }
-                Collections.sort(list);
-                long t1 = tech1(list,n,k);
-                long t2 = tech2(list,n,k);
-                pw.println(Math.max(t1,t2));
+                int count = 0;
+                for(int i=0;i<days;i++){
+                    if(scoor[i]>jhon[i]){
+                        count += (scoor[i]-jhon[i]);
+                    }
+                }
+                pw.print("Case #"+(tc-t)+": "+count);
+                pw.println();
             }
             pw.flush();
         } catch (Exception e) {
             return;
         }
     }
-    static long tech1(ArrayList<Long> list,long n,long k){
-        if(list.get((int)n-1)==(2*n) || k==1){
-            return tech2(list,n,k);
-        }
-        else{
-            list.add(2*n);
-            n++;
-            k--;
-            return tech2(list,n,k);
-        }
-    }
-    static long tech2(ArrayList<Long> list,long n,long k){
-        long count = 0;
-        for(int i=0;(i<n && k>0);i++){
-            if(list.get(i)!=(i+1)){
-                count += list.get((int)n-1)-(i+1);
-                list.add(i,(long)(i+1));
-                n++;
-                k--;
-            }
-            else{
-                continue;
-            }
-            if(k<=0){
-                return count;
-            }
-        }
-        return count;
-    }
+
     static class FastReader {
         BufferedReader br;
         StringTokenizer st;
